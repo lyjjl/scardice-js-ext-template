@@ -1,6 +1,7 @@
 {
   "name": "a-long-story",
   "version": "1.0.0",
+  "packageManager": "pnpm@8",
   "description": "once upon a time, ...",
   "main": "build/index.js",
   "typings": "build/index.d.ts",

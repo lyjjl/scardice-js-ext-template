@@ -1,0 +1,37 @@
+# CI: 使用 pnpm 安装并构建
+# 说明：此工作流在 push 到主分支或 PR 时触发，使用 Node.js 环境并通过 pnpm 安装依赖与构建。
+name: CI (pnpm)
+
+on:
+  push:
+    branches: ['main', 'master']
+  pull_request:
+    branches: ['main', 'master']
+
+jobs:
+  build:
+    name: 构建 (pnpm)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: 启用 corepack 并激活 pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@8 --activate
+
+      - name: 安装依赖 (pnpm)
+        run: pnpm install --frozen-lockfile
+
+      - name: 构建
+        run: pnpm run build
+
+      - name: 运行 lint（如果存在）
+        run: pnpm run lint || true
