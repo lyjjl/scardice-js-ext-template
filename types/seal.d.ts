@@ -13,28 +13,28 @@ declare namespace seal {
     /** 权限等级 40邀请者 50管理 60群主 100master */
     privilegeLevel: number;
     /** 代骰附加文本 */
-    delegateText: string
+    delegateText: string;
     /** 对通知列表发送消息 */
-    notice(text: string): void
+    notice(text: string): void;
   }
 
   export interface ValueMap {
     /** 获取 */
-    get(k): [any, boolean]
+    get(k): [any, boolean];
     /** 添加 */
-    set(k, v): void
+    set(k, v): void;
     /** 删除 */
-    del(k): void
+    del(k): void;
     /** 数量 */
-    len(): number
+    len(): number;
     /** 迭代 */
-    next(): [any, any, boolean]
+    next(): [any, any, boolean];
     /** 遍历 参数不能传入 `()=>null`，但可以传入 `()=>{}` 或者 `function(){}` */
-    iterate(fun: (k, v) => void): void
+    iterate(fun: (k, v) => void): void;
     // 加锁
-    lock(): void
+    lock(): void;
     // 解锁
-    unlock(): void
+    unlock(): void;
   }
 
   /** 群信息 */
@@ -96,10 +96,7 @@ declare namespace seal {
   export function newMessage(): Message;
 
   /** 创建一个 ctx 对象 */
-  export function createTempCtx(
-    endPoint: EndPointInfo,
-    msg: Message
-  ): MsgContext;
+  export function createTempCtx(endPoint: EndPointInfo, msg: Message): MsgContext;
 
   /** 发送者信息 */
   export interface Sender {
@@ -169,15 +166,14 @@ declare namespace seal {
     /** 获取第N个参数，从1开始，如“.ra 力量50 推门” 参数1为“力量50”，参数2是“推门” */
     getArgN(n: number): string;
     /** 分离前缀 如 `.stdel力量` => [del,力量] ，直接修改 argv 属性*/
-    chopPrefixToArgsWith(...s: string[]): boolean
+    chopPrefixToArgsWith(...s: string[]): boolean;
     /** 吃掉前缀并去除复数空格 `set xxx  xxx` => `xxx xxx`，返回修改后的字符串和是否修改成功的布尔值  */
-    eatPrefixWith(...s: string[]): [string, boolean]
+    eatPrefixWith(...s: string[]): [string, boolean];
     /** 将第 n 个参数及之后参数用空格拼接起来; 如指令 `send to qq x1 x2`,n=3返回 `x1 x2` */
-    getRestArgsFrom(n: number): string
+    getRestArgsFrom(n: number): string;
     /** 检查第N项参数是否为某个字符串，n从1开始，若没有第n项参数也视为失败 */
-    isArgEqual(n: number, ...s: string[]): boolean
+    isArgEqual(n: number, ...s: string[]): boolean;
   }
-
 
   interface CmdItemInfo {
     solve: (ctx: MsgContext, msg: Message, cmdArgs: CmdArgs) => CmdExecuteResult;
@@ -209,33 +205,32 @@ declare namespace seal {
     /** 指令映射 */
     cmdMap: { [key: string]: CmdItemInfo };
     /** 是否加载完成 */
-    isLoaded: boolean
+    isLoaded: boolean;
     /** 存放数据 */
     storageSet(key: string, value: string);
     /** 取数据 */
     storageGet(key: string): string;
     /** 匹配非指令消息 */
-    onNotCommandReceived: (ctx: MsgContext, msg: Message) => void
+    onNotCommandReceived: (ctx: MsgContext, msg: Message) => void;
     /** 试图匹配自定义指令（只对内置扩展有意义） */ // 已废弃
     // onCommandOverride: (ctx: MsgContext, msg: Message, cmdArgs: CmdArgs) => boolean;
     /** 监听 收到指令 事件 */
-    onCommandReceived: (ctx: MsgContext, msg: Message, cmdArgs: CmdArgs) => void
+    onCommandReceived: (ctx: MsgContext, msg: Message, cmdArgs: CmdArgs) => void;
     /** 监听 收到消息 事件，如 log 模块记录收到文本 */
-    onMessageReceived: (ctx: MsgContext, msg: Message) => void
+    onMessageReceived: (ctx: MsgContext, msg: Message) => void;
     /** 监听 发送消息 事件，如 log 模块记录指令文本 */
-    onMessageSend: (ctx: MsgContext, msg: Message, flag: string) => void
+    onMessageSend: (ctx: MsgContext, msg: Message, flag: string) => void;
     /** 获取扩展介绍文本 */
-    getDescText(): string
+    getDescText(): string;
     /** 监听 加载时 事件，如 deck 模块需要读取牌堆文件 */
-    onLoad: (...any: any) => void
+    onLoad: (...any: any) => void;
     /** 初始化数据，读写数据时会自动调用 */
-    storageInit()
+    storageInit();
     /** 读数据 如果无需自定义错误处理就无需使用 */
-    storageGetRaw(k: string)
+    storageGetRaw(k: string);
     /** 写数据 如果无需自定义错误处理就无需使用 */
-    storageSetRaw(k: string, v: string)
+    storageSetRaw(k: string, v: string);
   }
-
 
   interface CmdExecuteResult {
     /** 是否顺利完成执行 */
@@ -244,7 +239,7 @@ declare namespace seal {
     showHelp: boolean;
   }
 
-  type BanRankType = number
+  type BanRankType = number;
   /*
     禁止等级
     BanRankBanned = -30
@@ -308,18 +303,18 @@ declare namespace seal {
      * @param id 用户群组
      */
     getUser(id: string): BanListInfoItem;
-  }
+  };
 
   interface ConfigItem {
-    key: string,
-    type: string,
-    defaultValue: any,
-    value: any,
-    option: any,
-    deprecated: boolean,
-    description: string
+    key: string;
+    type: string;
+    defaultValue: any;
+    value: any;
+    option: any;
+    deprecated: boolean;
+    description: string;
   }
-  type TimeOutTaskType = 'cron'|'daily'
+  type TimeOutTaskType = 'cron' | 'daily';
   export const ext: {
     /**
      * 新建一个扩展
@@ -352,7 +347,7 @@ declare namespace seal {
      * @param defaultValue 配置项值
      * @param desc 描述
      */
-    registerStringConfig(ext: ExtInfo,key: string,defaultValue: string,desc?: string): void;
+    registerStringConfig(ext: ExtInfo, key: string, defaultValue: string, desc?: string): void;
     /**
      * 注册一个整型的配置项
      * @param ext 扩展对象
@@ -360,7 +355,7 @@ declare namespace seal {
      * @param defaultValue 配置项值
      * @param desc 描述
      */
-    registerIntConfig(ext: ExtInfo,key: string,defaultValue: number,desc?: string): void;
+    registerIntConfig(ext: ExtInfo, key: string, defaultValue: number, desc?: string): void;
     /**
      * 注册一个布尔类型的配置项
      * @param ext 扩展对象
@@ -368,7 +363,7 @@ declare namespace seal {
      * @param defaultValue 配置项值
      * @param desc 描述
      */
-    registerBoolConfig(ext: ExtInfo,key: string,defaultValue: boolean,desc?: string): void;
+    registerBoolConfig(ext: ExtInfo, key: string, defaultValue: boolean, desc?: string): void;
     /**
      * 注册一个浮点数类型的配置项
      * @param ext 扩展对象
@@ -376,7 +371,7 @@ declare namespace seal {
      * @param defaultValue 配置项值
      * @param desc 描述
      */
-    registerFloatConfig(ext: ExtInfo,key: string,defaultValue: number,desc?: string): void;
+    registerFloatConfig(ext: ExtInfo, key: string, defaultValue: number, desc?: string): void;
     /**
      * 注册一个template类型的配置项
      * @param ext 扩展对象
@@ -384,7 +379,7 @@ declare namespace seal {
      * @param defaultValue 配置项值
      * @param desc 描述
      */
-    registerTemplateConfig(ext: ExtInfo,key: string,defaultValue: string[],desc?: string): void;
+    registerTemplateConfig(ext: ExtInfo, key: string, defaultValue: string[], desc?: string): void;
     /**
      * 注册一个option类型的配置项
      * @param ext 扩展对象
@@ -393,7 +388,13 @@ declare namespace seal {
      * @param option 可选项
      * @param desc 描述
      */
-    registerOptionConfig(ext: ExtInfo,key: string,defaultValue: string,option: string[],desc?: string): void;
+    registerOptionConfig(
+      ext: ExtInfo,
+      key: string,
+      defaultValue: string,
+      option: string[],
+      desc?: string,
+    ): void;
     /**
      * 创建一个新的配置项
      * @param ext 扩展对象
@@ -401,61 +402,61 @@ declare namespace seal {
      * @param defaultValue 配置项值
      * @param desc 描述
      */
-    newConfigItem(ext: ExtInfo,key: string,defaultValue: any,desc: string): ConfigItem;
+    newConfigItem(ext: ExtInfo, key: string, defaultValue: any, desc: string): ConfigItem;
     /**
      * 注册配置
      * @param ext 扩展对象
      * @param configs 配置项对象
      */
-    registerConfig(ext: ExtInfo,...configs:ConfigItem[]): void;
+    registerConfig(ext: ExtInfo, ...configs: ConfigItem[]): void;
     /**
      * 获取指定名称的配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getConfig(ext: ExtInfo,key: string): ConfigItem;
+    getConfig(ext: ExtInfo, key: string): ConfigItem;
     /**
      * 获取指定名称的字符串类型配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getStringConfig(ext: ExtInfo,key: string): string;
+    getStringConfig(ext: ExtInfo, key: string): string;
     /**
      * 获取指定名称的整型配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getIntConfig(ext: ExtInfo,key: string): number;
+    getIntConfig(ext: ExtInfo, key: string): number;
     /**
      * 获取指定名称的布尔类型配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getBoolConfig(ext: ExtInfo,key: string): boolean;
+    getBoolConfig(ext: ExtInfo, key: string): boolean;
     /**
      * 获取指定名称的浮点数类型配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getFloatConfig(ext: ExtInfo,key: string): number;
+    getFloatConfig(ext: ExtInfo, key: string): number;
     /**
      * 获取指定名称的template类型配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getTemplateConfig(ext: ExtInfo,key: string): string[];
+    getTemplateConfig(ext: ExtInfo, key: string): string[];
     /**
      * 获取指定名称的option类型配置项对象
      * @param ext 扩展对象
      * @param key 配置项名称
      */
-    getOptionConfig(ext: ExtInfo,key: string): string;
+    getOptionConfig(ext: ExtInfo, key: string): string;
     /**
      * 卸载对应名称的配置项
      * @param ext 扩展对象
      * @param keys 配置项名称
      */
-    unregisterConfig(ext: ExtInfo,...keys: string[]):void;
+    unregisterConfig(ext: ExtInfo, ...keys: string[]): void;
 
     /**
      * 注册定时任务
@@ -466,8 +467,15 @@ declare namespace seal {
      * @param key 定时任务名称
      * @param desc 定时任务描述
      */
-    registerTask(ext: ExtInfo, taskType: TimeOutTaskType, value: string, fn: Function, key?: string, desc?: string): void;
-  }
+    registerTask(
+      ext: ExtInfo,
+      taskType: TimeOutTaskType,
+      value: string,
+      fn: Function,
+      key?: string,
+      desc?: string,
+    ): void;
+  };
 
   interface CocRuleInfo {
     /** 序号 */
@@ -499,7 +507,7 @@ declare namespace seal {
     newRule(): CocRuleInfo;
     newRuleCheckResult(): CocRuleCheckRet;
     registerRule(rule: CocRuleInfo): boolean;
-  }
+  };
 
   /** 代骰模式下，获取被代理人信息 */
   export function getCtxProxyFirst(ctx: MsgContext, cmdArgs: CmdArgs): MsgContext;
@@ -512,7 +520,7 @@ declare namespace seal {
   /** 格式化文本 等价于 `text` 指令 */
   export function format(ctx: MsgContext, text: string): string;
   /** 获取回复文案 */
-  export function formatTmpl(ctx: MsgContext, text: string): string
+  export function formatTmpl(ctx: MsgContext, text: string): string;
   /** 代骰模式下，获取被代理人信息 */
   export function getCtxProxyFirst(ctx: MsgContext, cmdArgs: CmdArgs): MsgContext;
   /** 新建一条消息 */
@@ -529,7 +537,12 @@ declare namespace seal {
    * @param userID 禁言对象ID
    * @param duration 禁言时间
    */
-  export function memberBan(ctx: MsgContext, groupID: string, userID: string, duration: number): void;
+  export function memberBan(
+    ctx: MsgContext,
+    groupID: string,
+    userID: string,
+    duration: number,
+  ): void;
   /**
    * 踢人
    * @param ctx 上下文
@@ -571,33 +584,32 @@ declare namespace seal {
 
   type VersionDetailsType = {
     // 内部版本号，新版本的版本号永远比旧版本的大
-    versionCode: number
+    versionCode: number;
     // 版本号+日期 如 1.4.6+20240810
-    version: string
+    version: string;
     // 版本号 如 1.4.6
-    versionSimple: string
+    versionSimple: string;
 
     versionDetail: {
+      major: number;
 
-      major:         number
+      minor: number;
 
-      minor:         number
+      patch: number;
 
-      patch:         number
-
-      prerelease:    string
+      prerelease: string;
       // 创建日期 如 20240810
-      buildMetaData: string
-    }
-  }
+      buildMetaData: string;
+    };
+  };
   /** 获取版本信息  */
   export function getVersion(): VersionDetailsType;
   /** 获取骰娘的EndPoints   */
-  export function getEndPoints(): EndPointInfo[]
+  export function getEndPoints(): EndPointInfo[];
 
-  export function setPlayerGroupCard(ctx: MsgContext, tmpl: string): string
+  export function setPlayerGroupCard(ctx: MsgContext, tmpl: string): string;
   // 通过base64返回图像临时地址
-  export function base64ToImage(base64: string): string
+  export function base64ToImage(base64: string): string;
 
   /** 获取/修改 VM 变量 ，如 `$t`、`$g` */
   export const vars: {
@@ -609,24 +621,23 @@ declare namespace seal {
     strGet(ctx: MsgContext, key: string): [string, boolean];
     /** 赋值 key 为 value 等价于指令 `text {key=value}` value 类型为字符串 */
     strSet(ctx: MsgContext, key: string, value: string): void;
-  }
+  };
 
   export const gameSystem: {
     /** 添加一个规则模板，需要是JSON文本格式 */
     newTemplate(data: string): unknown;
     /** 添加一个规则模板，需要是YAML文本格式 */
     newTemplateByYaml(data: string): unknown;
-  }
-
+  };
 
   /** deck */
   export interface deckResult {
     /** 是否存在 */
-    "exists": boolean,
+    exists: boolean;
     /** 错误信息 */
-    "err": string,
+    err: string;
     /** 抽牌结果 */
-    "result": string | null
+    result: string | null;
   }
 
   export const deck: {
@@ -636,7 +647,6 @@ declare namespace seal {
      * @param name 牌堆名
      * @param isShuffle 是否放回
      */
-    draw(ctx: MsgContext, name: string, isShuffle: boolean): deckResult
-  }
-
+    draw(ctx: MsgContext, name: string, isShuffle: boolean): deckResult;
+  };
 }
