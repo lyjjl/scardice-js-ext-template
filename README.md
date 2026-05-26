@@ -26,7 +26,7 @@ pnpm run biome:ci
 
 ```
 corepack enable
-corepack prepare pnpm@latest --activate
+corepack prepare pnpm@10.33.4 --activate
 pnpm add -D -E @biomejs/biome
 pnpm exec biome init
 ```

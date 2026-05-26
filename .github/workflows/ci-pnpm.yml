@@ -25,7 +25,7 @@ jobs:
       - name: 启用 corepack 并激活 pnpm
         run: |
           corepack enable
-          corepack prepare pnpm@latest --activate
+          corepack prepare pnpm@10.33.4 --activate
 
       - name: 安装依赖 (pnpm)
         run: pnpm install --frozen-lockfile
