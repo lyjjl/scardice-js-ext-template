@@ -33,5 +33,5 @@ jobs:
       - name: 构建
         run: pnpm run build
 
-      - name: 运行 lint（如果存在）
-        run: pnpm run lint || true
+      - name: 运行 Biome 检查（CI）
+        run: pnpm run biome:ci
