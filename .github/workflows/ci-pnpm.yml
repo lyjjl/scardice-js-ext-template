@@ -20,7 +20,7 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: 启用 corepack 并激活 pnpm
         run: |
