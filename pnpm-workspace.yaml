@@ -1,0 +1,6 @@
+# pnpm v10+ 配置
+# 允许特定依赖执行构建脚本（解决 esbuild 等原生包被忽略的问题）
+# 这不会影响全局设置，仅作用于本项目
+allowBuilds:
+  esbuild: true
+  '@biomejs/biome': true
