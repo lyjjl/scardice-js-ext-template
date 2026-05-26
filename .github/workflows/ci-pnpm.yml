@@ -20,15 +20,21 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v5
 
+      # ────────────────────────────────────────────────────────────
+      # 解决方案：使用官方 pnpm/action-setup@v4，比 corepack 在 CI 中稳定得多，
+      # 并且必须在 actions/setup-node 之前运行，以允许其正确初始化 pnpm 并自动完成依赖缓存。
+      # ────────────────────────────────────────────────────────────
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.4
+          run_install: false
+
       - name: 设置 Node.js
         uses: actions/setup-node@v5
         with:
           node-version: '18'
-
-      - name: 启用 corepack 并激活 pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@10.33.4 --activate
+          cache: 'pnpm'
 
       - name: 安装依赖 (pnpm)
         run: pnpm install --frozen-lockfile
