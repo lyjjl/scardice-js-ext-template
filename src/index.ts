@@ -36,7 +36,7 @@ function main() {
   };
 
   // 注册命令
-  ext.cmdMap['seal'] = cmdSeal;
+  ext.cmdMap.seal = cmdSeal;
 }
 
 main();

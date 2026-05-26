@@ -20,7 +20,7 @@
     }
   },
   "files": {
-    "includes": ["src/**/*.ts", "types/**/*.d.ts"],
+    "includes": ["src/**/*.ts"],
     "ignoreUnknown": false
   }
 }
